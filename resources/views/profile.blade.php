@@ -34,13 +34,13 @@
                         <!-- Right column for avatar -->
                         <div class="col-md-6" bis_skin_checked="1">
                             <div class="form-group row" bis_skin_checked="1">
-                                <label class="col-sm-3 col-form-label">Current Avatar</label>
+                                <label class="col-sm-3 col-form-label">Obecne zdjęcie</label>
                                 <div class="col-sm-9" bis_skin_checked="1">
                                     <img src="{{ Auth::user()->image_url ?? 'storage/images/users_avatars/default.jpg' }}" alt="Current Avatar" class="img-fluid" style="max-width: 200px; max-height: 200px">
                                 </div>
                             </div>
                             <div class="form-group row" bis_skin_checked="1">
-                                <label class="col-sm-3 col-form-label">New Avatar</label>
+                                <label class="col-sm-3 col-form-label">Nowe zdjęcie</label>
                                 <div class="col-sm-9" bis_skin_checked="1">
                                     <input type="file" name ='avatar' id = 'avatar' class="form-control" accept="image/*">
                                 </div>
@@ -66,8 +66,8 @@
                     <div class="row" bis_skin_checked="1">
                         <div class="col-md-12" bis_skin_checked="1">
                             <!-- Edit button to make fields editable -->
-                            <button type="button" class="btn btn-warning" id="editButton">Edit</button>
-                            <button type="submit" class="btn btn-primary" id="saveButton" disabled>Save Changes</button>
+                            <button type="button" class="btn btn-warning" id="editButton">Edytuj </button>
+                            <button type="submit" class="btn btn-primary" id="saveButton" disabled>Zapisz zmiany</button>
                         </div>
                     </div>
                 </form>

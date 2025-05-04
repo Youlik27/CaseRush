@@ -34,8 +34,14 @@
                     {{--                    </li>--}}
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
-                        @if(auth()->check() && auth()->user()->hasRole(['moderator','admin']))
-                    {{--    <li class="nav-item dropdown d-none d-lg-block">
+                        @if(auth()->check() && auth()->user()->hasRole('admin'))
+                        <li class="nav-item dropdown d-none d-lg-block">
+                            <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown"  aria-expanded="false" href="{{route('users.management')}}"> Zarządzanie treścią </a>
+                        </li>
+                    @endif
+                            @if(auth()->check() && auth()->user()->hasRole('moderator'))
+
+                            {{--    <li class="nav-item dropdown d-none d-lg-block">
                         <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                             <h6 class="p-3 mb-0">Projects</h6>
@@ -76,12 +82,12 @@
                             <p class="p-3 mb-0 text-center">See all projects</p>
                         </div>
                     </li>--}}
-                        <li class="nav-item dropdown d-none d-lg-block">
-                                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown"  aria-expanded="false" href="{{route(auth()->user()->hasRole('admin') ? 'users.management' : 'users.management')}}">{{ auth()->user()->hasRole(['admin']) ? 'Zarządzanie użytkownikami' : 'Zarządzanie skrzynkami' }}</a>
-                        </li>
+                                <li class="nav-item dropdown d-none d-lg-block">
+                                    <a onclick="showModeratorButtons()" class="nav-link btn btn-success create-new-button" id="createbuttonDropdown"  aria-expanded="false" href="#section">Zarządzanie skrzynkami</a>
+                                </li>
                     @endif
                     <li class="nav-item dropdown border-left">
-                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle"   id="notificationDropdown" href="#" data-toggle="dropdown">
                             <i class="mdi mdi-bell"></i>
                             <span class="count bg-danger"></span>
                         </a>
@@ -191,13 +197,6 @@
                             @endauth
                         </li>
 
-                        <!-- Форма для выхода (для logout) -->
-                        @auth
-                            <form id="logout-form" action="" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        @endauth
-
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                     <span class="mdi mdi-format-line-spacing"></span>
@@ -208,6 +207,7 @@
         <div class="main-panel">
             @yield('banner')
             <div class="content-wrapper">
+
                 @yield('content')
             </div>
             <footer class="footer">
@@ -218,6 +218,7 @@
             </footer>
             <!-- partial -->
         </div>
+
         <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
@@ -241,5 +242,8 @@
 <script src="js/todolist.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/edit_button.js"></script>
+<script src="js/moderator_button.js"></script>
+<script src="js/section-ajax.js"></script>
+
 </body>
 </html>
