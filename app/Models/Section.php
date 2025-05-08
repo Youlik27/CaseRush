@@ -11,7 +11,7 @@ class Section extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'section_name', 'order_numbe', 'created_at', 'updated_at', 'created_by', 'updated_by'
+        'section_name', 'order_number', 'created_at', 'updated_at', 'created_by', 'updated_by'
     ];
 
     public function cases()

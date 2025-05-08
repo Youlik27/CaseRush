@@ -63,7 +63,7 @@ Route::post('/moderating_change_section_name', function () {
 })->name('moderating.change.section.name');
 
 // Usunięcie sekcji – tylko dla moderatora
-Route::delete('/moderating_delate_section_{section_id}', function ($section_id) {
+Route::delete('/moderating_delete_section_{section_id}', function ($section_id) {
     if (auth()->check() && auth()->user()->hasRole('moderator')) {
         return app(ModeratorController::class)->deleteSection($section_id);
     }
@@ -85,21 +85,38 @@ Route::post('/moderating_move_down_section_{section_id}', function ($section_id)
     }
     abort(403, 'Dostęp zabroniony');
 })->name('moderating.move.down.section');
+Route::delete('/moderating_delete_case_{case_id}', function ($case) {
+    if (auth()->check() && auth()->user()->hasRole('moderator')) {
+        return app(ModeratorController::class)->deleteCase($case);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('moderating.delete.case');
 
 // Tworzenie case’a – tylko dla moderatora
 Route::post('/case_creation', function () {
     if (auth()->check() && auth()->user()->hasRole('moderator')) {
-        return app(ModeratorController::class)->generateViewCaseCreating(request());
+        return app(ModeratorController::class)->createCase(request());
     }
     abort(403, 'Dostęp zabroniony');
 })->name('case.creating');
 
-// Aktualizacja case’a – tylko dla moderatora
-Route::post('/case_updating', function () {
+Route::post('/case_updating_enter-{id_case}', function ($id_case) {
     if (auth()->check() && auth()->user()->hasRole('moderator')) {
-        return app(ModeratorController::class)->caseUpdating(request());
+        return app(ModeratorController::class)->generateViewCaseUpdating($id_case);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('case.updating.enter');
+// Aktualizacja case’a – tylko dla moderatora
+Route::post('/case_updating-{id_case}', function ($id_case) {
+    if (auth()->check() && auth()->user()->hasRole('moderator')) {
+        return app(ModeratorController::class)->caseUpdating($id_case, request());
     }
     abort(403, 'Dostęp zabroniony');
 })->name('case.updating');
-
+Route::post('/item_created-{id_case}', function ($id_case) {
+    if (auth()->check() && auth()->user()->hasRole('moderator')) {
+        return app(ModeratorController::class)->itemCreating(request(), $id_case);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('item.creating');
 // Strona potwierdzająca utworzenie case’a – tylko dla moderatora

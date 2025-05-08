@@ -41,7 +41,7 @@
 
         <form action="{{ route('moderating.change.section.name') }}" method="post" class="hidden" id="change_section_name_form_{{ $sect->id_sections }}">
             @csrf
-            <input type="hidden" name="section_id" value="{{ $sect->id_sections }}">
+            <input type="hidden" name="case_id" value="{{ $sect->id_sections }}">
             <div class="form-group">
                 <label for="section_name_input_{{ $sect->id_sections }}">Nowa nazwa sekcji</label>
                 <input type="text" name="section_name" id="section_name_input_{{ $sect->id_sections }}" class="form-control p_input" value="{{ $sect->section_name }}">
@@ -56,14 +56,35 @@
                 <!-- Cases -->
                 @foreach($cases as $case)
                     @if($case->sections_id_sections == $sect->id_sections)
-                    <div class="col-md-3">
+
+                        <div class="col-md-3">
                         <div class="card case-card">
-                            <img src="images/cases/{{$case->image_url}}" alt="Case Image">
+                            <img src="storage/images/cases/{{$case->image_url}}" alt="Case Image">
                             <div class="card-body">
                                 <h5 class="card-title">{{$case->name}}</h5>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{$case->price}}</h5>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-3">
+                                <form action="{{ route('moderating.delete.case', $case->id_case) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="plus-button moderator-button hidden">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                </form>
+                            </div>
+                                <div class="col-md-3">
+                                    <form action="{{ route('case.updating.enter', $case->id_case) }}" method="POST" style="display:inline;">
+                                        @csrf
+
+                                        <button type="submit" class="plus-button moderator-button hidden">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

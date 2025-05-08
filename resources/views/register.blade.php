@@ -60,16 +60,10 @@
                             </button>
                         </div>
                     @endif
-                  <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Zapamiętaj mnie </label>
-                    </div>
-                  </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                   </div>
-                  <p class="sign-up text-center">Masz już konto?<a href="{{ route('login') }}"> Zarejestruj się</a></p>
+                  <p class="sign-up text-center">Masz już konto?<a href="{{ route('login') }}"> Zaloguj się</a></p>
                 </form>
               </div>
             </div>

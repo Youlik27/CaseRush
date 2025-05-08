@@ -11,7 +11,13 @@ function changeSectionName(id_sections) {
     const form = document.getElementById(`change_section_name_form_${id_sections}`);
     form.classList.toggle("hidden");
 }
+function showAddItemForm() {
+    document.getElementById('addItemModal').classList.add('show');
+}
 
+function hideAddItemForm() {
+    document.getElementById('addItemModal').classList.remove('show');
+}
 /*function changeSectionName(id) {
     showModeratorButtons();
     const form = document.getElementById(`change_section_name_form_${id}`);

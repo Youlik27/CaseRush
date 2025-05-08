@@ -52,13 +52,6 @@
                         </div>
                     @endif
 
-                  <div class="form-group d-flex align-items-center justify-content-between">
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"> Zapamiętaj mnie </label>
-                    </div>
-                    <a href="#" class="forgot-pass">Zapomniałem hasło</a>
-                  </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-block enter-btn">Zaloguj się</button>
                   </div>
