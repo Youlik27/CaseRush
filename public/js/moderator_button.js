@@ -18,8 +18,9 @@ function showAddItemForm() {
 function hideAddItemForm() {
     document.getElementById('addItemModal').classList.remove('show');
 }
-/*function changeSectionName(id) {
-    showModeratorButtons();
-    const form = document.getElementById(`change_section_name_form_${id}`);
-    form.classList.toggle("hidden");
-}*/
+function navigateToCase(event, url) {
+    if (event.target.closest('form')) {
+        return;
+    }
+    window.location = url;
+}

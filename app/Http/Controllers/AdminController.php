@@ -7,31 +7,33 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // Метод для отображения страницы с пользователями
-    public function index()
+    public function generateView(Request $request)
     {
-        $users = User::all();  // Получаем всех пользователей
-        return view('users.index', compact('users'));
+        $search = $request->get('search', '');
+
+        $users = User::where('username', 'like', "%{$search}%")
+            ->orWhere('email', 'like', "%{$search}%")
+            ->paginate(10);
+        return view('user-management', compact('users', 'search'));
+
     }
 
-    // Метод для обновления данных пользователя
-    public function updateUser(Request $request, $id)
-    {
-        $user = User::find($id);
 
-        // Валидируем данные
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'role' => 'required|string|in:admin,user',
+    public function updateUser(Request $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $validated = $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email',
+            'balance' => 'required|numeric'
         ]);
 
-        // Обновляем данные пользователя
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role = $request->input('role');
+        $user->username = $validated['username'];
+        $user->email = $validated['email'];
+        $user->balance = $validated['balance'];
         $user->save();
 
-        return response()->json(['message' => 'Данные обновлены']);
+        return response()->json(['success' => true]);
     }
 }

@@ -5,12 +5,11 @@
         <div class="card" >
             <div class="card-body" >
                 <h4 class="card-title">Edytuj case</h4>
-                <form method="POST" enctype="multipart/form-data" action="{{ route('case.updating',$case->id_case)}}">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('case.updating', $case->id_case) }}">
                     @csrf
                     <input type="hidden" name="id_case" value="{{ $case->id_case}}">
                     <p class="card-description">Informacje o case</p>
                     <div class="row">
-                        <!-- Left column for user information -->
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Nazwa</label>
@@ -32,7 +31,6 @@
                             </div>
                         </div>
 
-                        <!-- Right column for avatar -->
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Obecne zdjęcie</label>
@@ -58,11 +56,27 @@
 
             </div>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center mb-4" role="alert" style="border-left: 4px solid #dc3545; background-color: #fff0f1;">
+                <i class="mdi mdi-alert-circle-outline text-danger mr-3" style="font-size: 1.8rem;"></i>
+                <div>
+                    <h6 class="font-weight-bold mb-2 text-danger">Oops! Coś poszło nie tak</h6>
+                    <ul class="mb-0 pl-3">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-danger">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" class="mdi mdi-close text-danger"></span>
+                </button>
+            </div>
+        @endif
         <div class="row g-2">
             @foreach($items as $caseItem)
                 <div class="col-4 col-sm-3 col-md-2 col-lg-1">
-                    <div class="card case-card square-card text-center">
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center p-1 h-100">
+                    <div class="card case-card position-relative")">
+                        <div class="card-body d-flex flex-column align-items    -center justify-content-center p-1 h-100">
                             <img class="img-fluid item-image-small mb-1"
                                  src="{{ asset('storage/images/items/' . $caseItem->item->image_url) }}"
                                  alt="{{ $caseItem->item->name }}">
@@ -78,14 +92,14 @@
                     </div>
                 </div>
             @endforeach
+            <div class="col-md-3 align-self-center">
+                <button class="plus-button moderator-button" id="add_button" onclick="showAddItemForm()">+</button>
+            </div>
         </div>
 
 
 
-        <div class="col-md-3 align-self-center">
-            <button class="plus-button moderator-button" id="add_button" onclick="showAddItemForm()">+</button>
-        </div>
-        <!-- Wyskakujący div do dodawania przedmiotów -->
+
         <div class="card modal-overlay" id="addItemModal">
             <h5 class="mb-3">Dodaj przedmiot</h5>
             <form method="POST" enctype="multipart/form-data" action="{{ route('item.creating',$case->id_case) }}">

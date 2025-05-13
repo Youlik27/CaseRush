@@ -21,11 +21,11 @@ class Drop extends Model
 
     public function item()
     {
-        return $this->belongsTo(Item::class, 'items_id_item');
+        return $this->belongsTo(Item::class, 'items_id_item', 'id_item');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id_user');
+        return $this->belongsTo(User::class, 'users_id_user', 'id_user');
     }
 }

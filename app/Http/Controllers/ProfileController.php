@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaseItem;
+use App\Models\Drop;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +16,8 @@ class ProfileController extends Controller
         return auth()->user();
     }
     public function generateView(){
-        return view('profile');
+        $items = Drop::with('item')->where('users_id_user', auth()->user()->id_user)->paginate(48);
+        return view('profile', compact('items'));
     }
 
     public function validate(Request $request)
@@ -79,4 +83,30 @@ class ProfileController extends Controller
         $user->email = $email;
         $user->save();
     }
+    public function sellItem($id_drop)
+    {
+
+        $user = auth()->user();
+        $item = Drop::with('item')->where('id_drop', $id_drop)->first();
+
+        if (!$item) {
+            abort(404, 'Przedmiot nie został znaleziony.');
+        }
+
+        $isOwner = $user->id_user == $item->users_id_user;
+
+        if (!$isOwner) {
+            abort(403, 'Nie masz uprawnień do sprzedaży tego przedmiotu.');
+        }
+        if (!$item->item) {
+            abort(404, 'Przedmiot nie ma przypisanych danych.');
+        }
+
+        $user->balance += $item->item->price;
+        $user->save();
+        $item->delete();
+
+        return redirect()->back();
+    }
+
 }

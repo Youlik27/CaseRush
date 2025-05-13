@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>CaseRush</title>
     <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="vendors/jvectormap/jquery-jvectormap.css">
@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="shortcut icon" href="images/banner/banner1.jpg" />
 </head>
 <body>
 <div class="container-scroller">
@@ -86,62 +86,11 @@
                                     <a onclick="showModeratorButtons()" class="nav-link btn btn-success create-new-button" id="createbuttonDropdown"  aria-expanded="false" href="#section">Zarządzanie skrzynkami</a>
                                 </li>
                     @endif
-                    <li class="nav-item dropdown border-left">
-                        <a class="nav-link count-indicator dropdown-toggle"   id="notificationDropdown" href="#" data-toggle="dropdown">
-                            <i class="mdi mdi-bell"></i>
-                            <span class="count bg-danger"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                            <h6 class="p-3 mb-0">Notifications</h6>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-calendar text-success"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject mb-1">Event today</p>
-                                    <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-settings text-danger"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject mb-1">Settings</p>
-                                    <p class="text-muted ellipsis mb-0"> Update dashboard </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-dark rounded-circle">
-                                        <i class="mdi mdi-link-variant text-warning"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <p class="preview-subject mb-1">Launch Admin</p>
-                                    <p class="text-muted ellipsis mb-0"> New admin wow! </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <p class="p-3 mb-0 text-center">See all notifications</p>
-                        </div>
-                    </li>
                     @auth
-                        <li class="nav-item dropdown border-left">
-                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                                <i class="fas fa-wallet wallet-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown d-none d-lg-block">
-                            <p class="mb-0 text-center">{{ Auth::user()->balance}} zł</p>
-                        </li>
+                                <li class="nav-item d-flex align-items-center text-white ml-3">
+                                    <i class="fas fa-wallet mr-1"></i>
+                                    <span>{{ Auth::user()->balance }}zł</span>
+                                </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                                 <div class="navbar-profile">
@@ -170,16 +119,6 @@
                                         </div>
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item preview-item" href="">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-dark rounded-circle">
-                                                <i class="mdi mdi-settings text-success"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content">
-                                            <p class="preview-subject mb-1">Settings</p>
-                                        </div>
-                                    </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item preview-item" href="{{route('logout')}}">
                                         <div class="preview-thumbnail">
@@ -192,7 +131,6 @@
                                         </div>
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <p class="p-3 mb-0 text-center">Advanced settings</p>
                                 </div>
                             @endauth
                         </li>

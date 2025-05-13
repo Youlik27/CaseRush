@@ -12,9 +12,7 @@ class LoginController extends Controller
     public function getInfo($usernameAndEmail){
         return User::where('username', '=', $usernameAndEmail)->orWhere('email', '=', $usernameAndEmail)->first();
     }
-    public function generateView(){
-        return view('login');
-    }
+
 
     public function validate(Request $request)
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CaseOpeningController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ModeratorController;
@@ -26,11 +27,16 @@ Route::post('/register/process', [RegisterController::class, 'process'])->name('
 // Profil – tylko dla zalogowanych z rolą
 Route::get('/profile', function () {
     if (auth()->check() && auth()->user()->hasRole(['moderator', 'admin', 'user'])) {
-        return view('profile');
+        return app(ProfileController::class)->generateView();
     }
     abort(403, 'Dostęp zabroniony');
 })->name('profile');
-
+Route::post('/profile/sell-item-{id_drop}', function ($id_drop) {
+    if (auth()->check() && auth()->user()->hasRole(['moderator', 'admin', 'user'])) {
+        return app(ProfileController::class)->sellItem($id_drop);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('profile.item.sell');
 Route::post('/profile/edit', function () {
     if (auth()->check() && auth()->user()->hasRole(['moderator', 'admin', 'user'])) {
         return app(ProfileController::class)->process(request());
@@ -41,11 +47,16 @@ Route::post('/profile/edit', function () {
 // Zarządzanie użytkownikami – tylko dla admina
 Route::get('/users_management', function () {
     if (auth()->check() && auth()->user()->hasRole('admin')) {
-        return view('user-management');
+        return app(AdminController::class)->generateView(request());
     }
     abort(403, 'Dostęp zabroniony');
 })->name('users.management');
-
+Route::post('/update-user/{userId}', function ($userId) {
+    if (auth()->check() && auth()->user()->hasRole('admin')) {
+        return app(AdminController::class)->updateUser(request(),$userId);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('update.user');
 // Dodanie sekcji – tylko dla moderatora
 Route::post('/moderating_add_section', function () {
     if (auth()->check() && auth()->user()->hasRole('moderator')) {
@@ -119,4 +130,19 @@ Route::post('/item_created-{id_case}', function ($id_case) {
     }
     abort(403, 'Dostęp zabroniony');
 })->name('item.creating');
+Route::get('/case-opening-{id_case}', function ($id_case) {
+    if (auth()->check() && auth()->user()->hasRole(['moderator', 'admin', 'user'])) {
+        return app(CaseOpeningController::class)->generateView($id_case);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('case.opening');
+Route::get('/case-{id_case}', function ($id_case) {
+    if (auth()->check() && auth()->user()->hasRole(['moderator', 'admin', 'user'])) {
+        return app(CaseOpeningController::class)->show($id_case);
+    }
+    abort(403, 'Dostęp zabroniony');
+})->name('case.show');
+Route::POST('/case_opened-{id_case}', [CaseOpeningController::class, 'open'])
+    ->name('case.open');
+
 // Strona potwierdzająca utworzenie case’a – tylko dla moderatora

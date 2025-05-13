@@ -73,6 +73,32 @@
                 </form>
             </div>
         </div>
-    </div>
+        <div class="row g-2">
+            @foreach($items as $caseItem)
+                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                    <div class="card card-item position-relative">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center p-1 h-100 item-content">
+                            <img class="img-fluid item-image-small mb-1"
+                                 src="{{ asset('storage/images/items/' . $caseItem->item->image_url) }}"
+                                 alt="{{ $caseItem->item->name }}">
+                            <div class="text-center small">
+                                <strong>{{ $caseItem->item->name }}</strong><br>
+                                💰 {{ number_format($caseItem->item->price, 2) }} zł<br>
+                                <span class="item-rarity rarity-{{ strtolower($caseItem->item->rarity) }}">{{ $caseItem->item->rarity }}</span>
+                            </div>
+                        </div>
+                        <form action="{{ route('profile.item.sell', ['id_drop' => $caseItem->id_drop]) }}" method="POST" class="sell-form position-absolute d-flex align-items-center justify-content-center">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-success rounded-circle shadow btn-sell" title="Sprzedaj">
+                                <i class="mdi mdi-cash-multiple"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+        @endforeach
 
+    </div>
+    <div>
+        {{ $items->links() }}
+    </div>
 @endsection
